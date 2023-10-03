@@ -34,7 +34,10 @@ function breakfast_rest_disable_user_list() {
  * @return WP_REST_Response
  */
 function breakfast_rest_user_response( $response ) {
-	$response->data  = array();
-	$response->links = array();
+	$response->data = array();
+	// Remove all links.
+	foreach ( $response->get_links() as $rel => $link ) {
+		$response->remove_link( $rel, $link[0]['href'] ?? '' );
+	}
 	return $response;
 }
