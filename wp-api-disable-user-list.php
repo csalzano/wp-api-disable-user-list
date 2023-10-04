@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Disable User List via REST
- * Description: Prevents logged-out users from obtaining a list of user names and email addresses via the REST API.
+ * Description: Prevents logged-out users from obtaining a list of user names via the REST API.
  * Plugin URI: https://github.com/csalzano/wp-api-disable-user-list/
  * Author: Breakfast Co.
  * Author URI: https://breakfastco.xyz
