@@ -16,8 +16,7 @@ defined( 'ABSPATH' ) || exit;
 
 add_action( 'rest_api_init', 'breakfast_rest_disable_user_list' );
 /**
- * Adds a filter to user data returned by the REST API when the user making the
- * request does not have the `list_users` permission.
+ * Prevents unauthenticated (or unauthorized) user enumeration via REST.
  *
  * @return void
  */
@@ -25,19 +24,32 @@ function breakfast_rest_disable_user_list() {
 	if ( current_user_can( 'list_users' ) ) {
 		return;
 	}
-	add_filter( 'rest_prepare_user', 'breakfast_rest_user_response', 10, 1 );
-}
-/**
- * Filters user data returned from the REST API.
- *
- * @param WP_REST_Response $response The response object.
- * @return WP_REST_Response
- */
-function breakfast_rest_user_response( $response ) {
-	$response->data = array();
-	// Remove all links.
-	foreach ( $response->get_links() as $rel => $link ) {
-		$response->remove_link( $rel, $link[0]['href'] ?? '' );
-	}
-	return $response;
+
+	add_filter(
+		'rest_pre_dispatch',
+		function ( $result, $server, $request ) {
+			if ( ! ( $request instanceof WP_REST_Request ) ) {
+				return $result;
+			}
+
+			$route  = (string) $request->get_route();
+			$method = (string) $request->get_method();
+
+			// Block the users collection and individual user endpoints for unauthorized requests.
+			if (
+				'GET' === $method
+				&& ( '/wp/v2/users' === $route || 0 === strpos( $route, '/wp/v2/users/' ) )
+			) {
+				return new WP_Error(
+					'rest_forbidden',
+					__( 'Sorry, you are not allowed to list users.', 'wp-api-disable-user-list' ),
+					array( 'status' => rest_authorization_required_code() )
+				);
+			}
+
+			return $result;
+		},
+		10,
+		3
+	);
 }
