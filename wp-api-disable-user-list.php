@@ -6,7 +6,7 @@
  * Author: Breakfast Co.
  * Author URI: https://breakfastco.xyz
  * License: GPLv2
- * Version: 0.1.1
+ * Version: 0.1.2
  *
  * @author Corey Salzano <csalzano@duck.com>
  * @package wp-api-disable-user-list
