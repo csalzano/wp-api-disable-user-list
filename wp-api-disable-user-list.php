@@ -156,3 +156,16 @@ add_filter( 'login_errors', 'breakfast_generic_login_error' );
 function breakfast_generic_login_error() {
 	return __( '<strong>Error:</strong> The username or password you entered is incorrect.', 'wp-api-disable-user-list' );
 }
+
+add_filter( 'oembed_response_data', 'breakfast_strip_oembed_author' );
+/**
+ * Removes author name and URL from oEmbed responses to prevent
+ * user enumeration via the /wp-json/oembed/1.0/embed endpoint.
+ *
+ * @param array $data The oEmbed response data.
+ * @return array
+ */
+function breakfast_strip_oembed_author( $data ) {
+	unset( $data['author_name'], $data['author_url'] );
+	return $data;
+}
