@@ -6,7 +6,7 @@
  * Author: Breakfast
  * Author URI: https://breakfastco.xyz
  * License: GPLv2
- * Version: 0.3.0
+ * Version: 1.0.0
  * GitHub Plugin URI: https://github.com/csalzano/wp-api-disable-user-list
  * Primary Branch: main
  *
