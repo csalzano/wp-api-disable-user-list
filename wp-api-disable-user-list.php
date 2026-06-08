@@ -145,6 +145,19 @@ function breakfast_xmlrpc_user_method_forbidden() {
 	return new IXR_Error( 403, __( 'Sorry, you are not allowed to list users.', 'wp-api-disable-user-list' ) );
 }
 
+add_filter( 'xmlrpc_methods', 'breakfast_xmlrpc_disable_multicall' );
+/**
+ * Removes the system.multicall method from the XML-RPC methods array. Prevents
+ * one HTTP POST from attempting thousands of passwords.
+ *
+ * @param array $methods The XML-RPC methods array.
+ * @return array
+ */
+function breakfast_xmlrpc_disable_multicall( $methods ) {
+	unset( $methods['system.multicall'] );
+	return $methods;
+}
+
 add_filter( 'login_errors', 'breakfast_generic_login_error' );
 /**
  * Replaces WordPress login error messages with a generic string so that
