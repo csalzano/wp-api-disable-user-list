@@ -1,12 +1,12 @@
 <?php
 /**
  * Plugin Name: Disable User List via REST
- * Description: Prevents user enumeration via the REST API, XML-RPC, author archives, and login errors.
+ * Description: Prevents user enumeration via the REST API, XML-RPC, author archives, the users sitemap, and login errors.
  * Plugin URI: https://github.com/csalzano/wp-api-disable-user-list/
  * Author: Breakfast
  * Author URI: https://breakfastco.xyz
  * License: GPLv2
- * Version: 1.0.0
+ * Version: 1.0.1
  * GitHub Plugin URI: https://github.com/csalzano/wp-api-disable-user-list
  * Primary Branch: main
  *
