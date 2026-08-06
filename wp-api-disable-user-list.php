@@ -182,3 +182,19 @@ function breakfast_strip_oembed_author( $data ) {
 	unset( $data['author_name'], $data['author_url'] );
 	return $data;
 }
+
+add_filter( 'wp_sitemaps_add_provider', 'breakfast_remove_users_sitemap_provider', 10, 2 );
+/**
+ * Removes the core users sitemap provider so /author/ URLs are not advertised
+ * in wp-sitemap.xml (author archives are already blocked above).
+ *
+ * @param WP_Sitemaps_Provider $provider Provider instance.
+ * @param string               $name     Provider name.
+ * @return WP_Sitemaps_Provider|false
+ */
+function breakfast_remove_users_sitemap_provider( $provider, $name ) {
+	if ( 'users' === $name ) {
+		return false;
+	}
+	return $provider;
+}
